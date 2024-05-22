@@ -7,9 +7,9 @@ with st.sidebar:
    st.writer('Seu aplicativo de dicas de saúde!')
    st.caption('Criado por ...')
 
-st.write('Nosso aplicativo tem como foco oferecer ...')
+txt = st.text_area("")
 
-import streamlit as st
+st.write('Nosso aplicativo tem como foco oferecer ...')
 
 tab1, tab2, tab3 = st.tabs(["Acervo", "Link"])
 
