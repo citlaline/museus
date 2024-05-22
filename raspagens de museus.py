@@ -8,3 +8,16 @@ with st.sidebar:
    st.caption('Criado por ...')
 
 st.write('Nosso aplicativo tem como foco oferecer ...')
+
+import streamlit as st
+
+tab1, tab2, tab3 = st.tabs(["Acervo", "Link"])
+
+with tab1:
+   st.header("Acervo")
+   st.image("https://static.streamlit.io/examples/cat.jpg", width=200)
+
+with tab2:
+   st.header("Link")
+   st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
+   
