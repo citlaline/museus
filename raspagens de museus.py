@@ -7,7 +7,10 @@ with st.sidebar:
    st.writer('Seu aplicativo de dicas de saúde!')
    st.caption('Criado por ...')
 
-txt = st.text_area("")
+txt = st.text_area(
+    "Descrição",
+    "",
+    )
 
 st.write('Nosso aplicativo tem como foco oferecer ...')
 
