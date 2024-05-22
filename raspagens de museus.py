@@ -7,6 +7,13 @@ with st.sidebar:
    st.writer('Seu aplicativo de dicas de saúde!')
    st.caption('Criado por ...')
 
+image = open('https://assets.masp.org.br/uploads/temp/WEB_IM_MASP_10834_01.jpg', 'rb').read()
+if st.button('Click me'):
+    st.write('Button clicked!')
+
+st.image(image, caption='Your Image', use_column_width=True)
+
+
 txt = st.text_area(
     "Descrição",
     "",
