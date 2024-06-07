@@ -1,3 +1,5 @@
+streamlit
+deep-translator==1.5.5
 matplotlib
 write
 torch==1.10.0
