@@ -1,13 +1,10 @@
 streamlit
 deep-translator
 matplotlib
-write
-PIL
-requests
 torch
 torchaudio
 torchvision
 bitsandbytes
 datasets
 accelerate
-transformers @ git+https://github.com/huggingface/transformers
+transformers
