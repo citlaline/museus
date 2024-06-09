@@ -6,7 +6,7 @@ col1, col2, col3, col4, col5 = st.columns(5)
 
 with col1:
    st.image("https://assets.masp.org.br/uploads/temp/WEB_AL_MASP_00267_01.jpg", width=100)
-   if st.button_1('Clique aqui'):
+   if st.button('Clique aqui'):
       st.write('Imagem selecionada')
       
 with col2:
