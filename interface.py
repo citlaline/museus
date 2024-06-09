@@ -11,7 +11,7 @@ with col1:
       
 with col2:
    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_C_01193_01.jpg", width=100)
-   if st.button_2('Clique aqui'):
+   if st.button_1('Clique aqui'):
       st.write_1('Imagem selecionada')
 
 with col3:
