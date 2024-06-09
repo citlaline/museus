@@ -16,7 +16,7 @@ descriptions = {
     'button2': "Esta pintura retrata uma cena de interior de uma casa. No primeiro plano, à esquerda, há uma cama com uma colcha escura decorada com padrões florais. Em frente à cama, um aparador de madeira com gavetas está encostado na parede. Em cima do aparador, um vaso branco contém um arranjo de flores coloridas. Acima do aparador, na parede, estão pendurados dois retratos emoldurados: um homem de aparência séria e uma mulher loira com um vestido escuro. A parede está coberta com papel de parede com um padrão de folhas. No centro da composição, uma porta branca parcialmente aberta revela uma figura masculina de costas, vestida com um roupão azul claro, caminhando em um corredor com piso vermelho.",
     'button3': "É uma obra abstrata que utiliza as cores e elementos da bandeira do Brasil. No centro da composição, há um grande círculo azul escuro, que é cortado por uma faixa branca com a inscrição 'ORDEM E PROGRESSO'. Sobre o círculo, uma seta vermelha aponta para cima, atravessando a faixa branca. O fundo é verde, com um losango amarelo no centro. Dentro do círculo azul, há estrelas brancas representando a constelação do Cruzeiro do Sul. A inscrição 'OKÊ OKÊ OKÊ OKÊ' está escrita em amarelo na faixa branca. A pintura utiliza formas geométricas simples e cores sólidas para criar uma imagem de forte impacto visual, evocando elementos nacionais brasileiros.",
     'button4': "",
-    'button5': "".
+    'button5': "",
 }
 
 st.title('Title')
