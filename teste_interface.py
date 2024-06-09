@@ -29,12 +29,12 @@ descriptions = {
 
 st.title('ArtWatch')
 
-# Barra lateral para upload de imagem ou link
-st.sidebar.header('Upload ou Link da Imagem')
-image_source = st.sidebar.radio("Escolha a fonte da imagem", ('Upload', 'Link'))
+# Seção para upload de imagem ou link
+st.header('Upload ou Link da Imagem')
+image_source = st.radio("Escolha a fonte da imagem", ('Upload', 'Link'))
 
 if image_source == 'Upload':
-    uploaded_file = st.sidebar.file_uploader("Escolha uma imagem...", type=['jpg', 'jpeg', 'png'])
+    uploaded_file = st.file_uploader("Escolha uma imagem...", type=['jpg', 'jpeg', 'png'])
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption='Imagem carregada.', use_column_width=True)
@@ -42,7 +42,7 @@ if image_source == 'Upload':
         st.write(description)
         play_audio(description, 'uploaded_image')
 elif image_source == 'Link':
-    image_url = st.sidebar.text_input("Coloque o link da imagem")
+    image_url = st.text_input("Coloque o link da imagem")
     if image_url:
         try:
             response = requests.get(image_url)
@@ -52,7 +52,7 @@ elif image_source == 'Link':
             st.write(description)
             play_audio(description, 'linked_image')
         except Exception as e:
-            st.sidebar.error("Não foi possível carregar a imagem do link. Verifique o URL.")
+            st.error("Não foi possível carregar a imagem do link. Verifique o URL.")
 
 col1, col2, col3, col4 = st.columns(4)
 
