@@ -5,9 +5,9 @@ st.title('Title')
 col1, col2, col3, col4, col5 = st.columns(5)
 
 with col1:
-   st.image_0("https://assets.masp.org.br/uploads/temp/WEB_AL_MASP_00267_01.jpg", width=100)
-   if st.button_0('Clique aqui'):
-      st.write_0('Imagem selecionada')
+   st.image("https://assets.masp.org.br/uploads/temp/WEB_AL_MASP_00267_01.jpg", width=100)
+   if st.button('Clique aqui'):
+      st.write('Imagem selecionada')
       
 with col2:
    st.image_1("https://assets.masp.org.br/uploads/temp/WEB_JB_C_01193_01.jpg", width=100)
