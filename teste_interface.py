@@ -3,7 +3,14 @@ from gtts import gTTS
 from PIL import Image
 import requests
 from io import BytesIO
+import base64
+from deep_translator import GoogleTranslator
+from ollama import Client
 import os
+
+# Configurar o cliente Ollama
+client = Client(host='https://ef12-2804-14d-5c5c-9ce1-00-1006.ngrok-free.app')
+translator = GoogleTranslator(source='en', target='pt')
 
 # Função para gerar e reproduzir áudio
 def play_audio(description, key):
@@ -13,13 +20,30 @@ def play_audio(description, key):
     audio_bytes = open(audio_file, 'rb').read()
     st.audio(audio_bytes, format='audio/mp3')
 
-# Função fictícia para descrever uma imagem
-def describe_image(image):
-    # Essa função deveria retornar uma descrição detalhada da imagem.
-    # Aqui, vamos usar uma descrição genérica, pois a descrição automática não é implementada.
-    return "Descrição detalhada da imagem fornecida."
+# Função para converter imagem em base64
+def convert_to_base64(imagem):
+    buffered = BytesIO()
+    with open(imagem, 'rb') as f:
+        buffered.write(f.read())
+    return base64.b64encode(buffered.getvalue()).decode()
 
-# Descrições das imagens
+# Função para descrever uma imagem
+def describe_image(image_path):
+    if image_path.startswith('http'):
+        content = requests.get(image_path).content
+        image_base64 = base64.b64encode(content).decode()
+    else:
+        with open(image_path, 'rb') as f:
+            image_base64 = base64.b64encode(f.read()).decode()
+    response = client.chat(
+        model='llava',
+        messages=[
+            {'role': 'user', 'content': 'Describe the following work of art:', 'images': [image_base64]},
+        ],
+    )
+    return translator.translate(response['message']['content'])
+
+# Descrições das imagens pré-definidas
 descriptions = {
     'button1': "A pintura mostra uma mulher nua deitada de barriga para cima, com o corpo ligeiramente inclinado para a direita em uma praia deserta. A iluminação da cena é dominada por tons quentes, sugerindo o pôr do sol. Seus cabelos negros e longos estão espalhados atrás de sua cabeça. Ela usa um adorno feito de penas na cintura. Ao fundo, o mar está calmo, com pequenas ondas lambendo a margem. Árvores densas e escuras margeiam a praia, criando uma atmosfera de mistério e tranquilidade. O céu quente complementa a cena serena e introspectiva.",
     'button2': "Esta pintura retrata uma cena de interior de uma casa. No primeiro plano, à esquerda, há uma cama com uma colcha escura decorada com padrões florais. Em frente à cama, um aparador de madeira com gavetas está encostado na parede. Em cima do aparador, um vaso contém um arranjo de flores diversas. Acima do aparador, na parede, estão pendurados dois retratos emoldurados: um homem de aparência séria e uma mulher loira com um vestido escuro. A parede está coberta com papel de parede com um padrão de folhas. No centro da composição, uma porta branca parcialmente aberta revela uma figura masculina de costas, vestida com um roupão, caminhando em um corredor com carpete.",
@@ -38,7 +62,7 @@ if image_source == 'Upload':
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption='Imagem carregada.', use_column_width=True)
-        description = describe_image(image)
+        description = describe_image(uploaded_file)
         st.write(description)
         play_audio(description, 'uploaded_image')
 elif image_source == 'Link':
@@ -48,7 +72,7 @@ elif image_source == 'Link':
             response = requests.get(image_url)
             image = Image.open(BytesIO(response.content))
             st.image(image, caption='Imagem do link.', use_column_width=True)
-            description = describe_image(image)
+            description = describe_image(image_url)
             st.write(description)
             play_audio(description, 'linked_image')
         except Exception as e:
