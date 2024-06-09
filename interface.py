@@ -11,22 +11,22 @@ with col1:
       
 with col2:
    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_C_01193_01.jpg", width=100)
-   if st.button_1('Clique aqui'):
+   if st.button('Clique aqui'):
       st.write_1('Imagem selecionada')
 
 with col3:
    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10811_01.jpg", width=100)
-   if st.button_2('Clique aqui'):
+   if st.button('Clique aqui'):
       st.write_2('Imagem selecionada')
 
 with col4:
    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10808_01.jpg", width=100)
-   if st.button_3('Clique aqui'):
+   if st.button('Clique aqui'):
       st.write_3('Imagem selecionada')
 
 with col5:
    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10802_01.jpg", width=100)
-   if st.button_4('Clique aqui'):
+   if st.button('Clique aqui'):
       st.write_4('Imagem selecionada')
 
 with st.sidebar:
