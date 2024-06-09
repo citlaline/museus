@@ -8,3 +8,4 @@ bitsandbytes
 datasets
 accelerate
 transformers
+gtts
