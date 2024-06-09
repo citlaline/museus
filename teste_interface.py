@@ -1,5 +1,8 @@
 import streamlit as st
 from gtts import gTTS
+from PIL import Image
+import requests
+from io import BytesIO
 import os
 
 # Função para gerar e reproduzir áudio
@@ -10,6 +13,12 @@ def play_audio(description, key):
     audio_bytes = open(audio_file, 'rb').read()
     st.audio(audio_bytes, format='audio/mp3')
 
+# Função fictícia para descrever uma imagem
+def describe_image(image):
+    # Essa função deveria retornar uma descrição detalhada da imagem.
+    # Aqui, vamos usar uma descrição genérica, pois a descrição automática não é implementada.
+    return "Descrição detalhada da imagem fornecida."
+
 # Descrições das imagens
 descriptions = {
     'button1': "A pintura mostra uma mulher nua deitada de barriga para cima, com o corpo ligeiramente inclinado para a direita em uma praia deserta. A iluminação da cena é dominada por tons quentes, sugerindo o pôr do sol. Seus cabelos negros e longos estão espalhados atrás de sua cabeça. Ela usa um adorno feito de penas na cintura. Ao fundo, o mar está calmo, com pequenas ondas lambendo a margem. Árvores densas e escuras margeiam a praia, criando uma atmosfera de mistério e tranquilidade. O céu quente complementa a cena serena e introspectiva.",
@@ -18,9 +27,34 @@ descriptions = {
     'button4': "A pintura representa um retrato de uma mulher negra, com cabelo curto e encaracolado, usando um vestido vinho de ombros à mostra com uma borda clara. O fundo é verde pastel bem claro. A mulher -Zefirina- está olhando diretamente para frente, com uma expressão séria. Ela usa brincos brancos pendurados em ambas as orelhas.",
 }
 
-st.title('Title')
+st.title('ArtWatch')
 
-col1, col2, col3, col4, = st.columns(4)
+# Barra lateral para upload de imagem ou link
+st.sidebar.header('Upload ou Link da Imagem')
+image_source = st.sidebar.radio("Escolha a fonte da imagem", ('Upload', 'Link'))
+
+if image_source == 'Upload':
+    uploaded_file = st.sidebar.file_uploader("Escolha uma imagem...", type=['jpg', 'jpeg', 'png'])
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+        st.image(image, caption='Imagem carregada.', use_column_width=True)
+        description = describe_image(image)
+        st.write(description)
+        play_audio(description, 'uploaded_image')
+elif image_source == 'Link':
+    image_url = st.sidebar.text_input("Coloque o link da imagem")
+    if image_url:
+        try:
+            response = requests.get(image_url)
+            image = Image.open(BytesIO(response.content))
+            st.image(image, caption='Imagem do link.', use_column_width=True)
+            description = describe_image(image)
+            st.write(description)
+            play_audio(description, 'linked_image')
+        except Exception as e:
+            st.sidebar.error("Não foi possível carregar a imagem do link. Verifique o URL.")
+
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.image("https://assets.masp.org.br/uploads/temp/WEB_AL_MASP_00267_01.jpg", width=100)
