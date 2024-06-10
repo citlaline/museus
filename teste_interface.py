@@ -23,18 +23,20 @@ def play_audio(description, key):
 # Função para converter imagem em base64
 def convert_to_base64(imagem):
     buffered = BytesIO()
-    with open(imagem, 'rb') as f:
-        buffered.write(f.read())
+    buffered.write(imagem.read())
     return base64.b64encode(buffered.getvalue()).decode()
 
 # Função para descrever uma imagem
-def describe_image(image_path):
-    if image_path.startswith('http'):
-        content = requests.get(image_path).content
+def describe_image(image_path_or_file):
+    if isinstance(image_path_or_file, str) and image_path_or_file.startswith('http'):
+        content = requests.get(image_path_or_file).content
         image_base64 = base64.b64encode(content).decode()
-    else:
-        with open(image_path, 'rb') as f:
+    elif isinstance(image_path_or_file, str):
+        with open(image_path_or_file, 'rb') as f:
             image_base64 = base64.b64encode(f.read()).decode()
+    else:
+        image_base64 = convert_to_base64(image_path_or_file)
+    
     response = client.chat(
         model='llava',
         messages=[
