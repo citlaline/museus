@@ -55,7 +55,7 @@ if image_source == 'Upload':
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption='Imagem carregada.', use_column_width=True)
-        image_bytes = uploaded_file.read()  # Lê o conteúdo do arquivo carregado
+        image_bytes = uploaded_file.getvalue()  # Lê o conteúdo do arquivo carregado
         description = describe_image(image_bytes)  # Passa o conteúdo do arquivo para a função
         st.write(description)
         play_audio(description, 'uploaded_image')
