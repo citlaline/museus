@@ -44,7 +44,7 @@ descriptions = {
     'button4': "A pintura representa um retrato de uma mulher negra, com cabelo curto e encaracolado, usando um vestido vinho de ombros à mostra com uma borda clara. O fundo é verde pastel bem claro. A mulher -Zefirina- está olhando diretamente para frente, com uma expressão séria. Ela usa brincos brancos pendurados em ambas as orelhas.",
 }
 
-st.title('ArtWatch')
+st.title('HEART')
 
 # Seção para upload de imagem ou link
 st.header('Upload ou Link da Imagem')
