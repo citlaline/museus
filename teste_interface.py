@@ -24,20 +24,9 @@ def convert_to_base64(image_bytes):
     return base64.b64encode(image_bytes).decode()
 
 # Função para descrever uma imagem
-def describe_image(image_path_or_file):
+def describe_image(image_bytes):
     st.write("Descrevendo imagem...")  # Mensagem de log
-    if isinstance(image_path_or_file, str) and image_path_or_file.startswith('http'):
-        st.write("Imagem é um URL.")  # Mensagem de log
-        content = requests.get(image_path_or_file).content
-        image_base64 = base64.b64encode(content).decode()
-    elif isinstance(image_path_or_file, str):
-        st.write("Imagem é um caminho de arquivo.")  # Mensagem de log
-        with open(image_path_or_file, 'rb') as f:
-            image_base64 = base64.b64encode(f.read()).decode()
-    else:
-        st.write("Imagem é um arquivo carregado.")  # Mensagem de log
-        image_bytes = image_path_or_file.read()
-        image_base64 = convert_to_base64(image_bytes)
+    image_base64 = convert_to_base64(image_bytes)
     
     response = client.chat(
         model='llava',
@@ -66,7 +55,8 @@ if image_source == 'Upload':
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption='Imagem carregada.', use_column_width=True)
-        description = describe_image(uploaded_file)
+        image_bytes = uploaded_file.read()  # Lê o conteúdo do arquivo carregado
+        description = describe_image(image_bytes)  # Passa o conteúdo do arquivo para a função
         st.write(description)
         play_audio(description, 'uploaded_image')
 elif image_source == 'Link':
@@ -76,7 +66,7 @@ elif image_source == 'Link':
             response = requests.get(image_url)
             image = Image.open(BytesIO(response.content))
             st.image(image, caption='Imagem do link.', use_column_width=True)
-            description = describe_image(image_url)
+            description = describe_image(response.content)  # Passa o conteúdo da resposta para a função
             st.write(description)
             play_audio(description, 'linked_image')
         except Exception as e:
