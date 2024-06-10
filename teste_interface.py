@@ -11,6 +11,18 @@ from ollama import Client
 client = Client(host='https://ef12-2804-14d-5c5c-9ce1-00-1006.ngrok-free.app')
 translator = GoogleTranslator(source='en', target='pt')
 
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background: url('https://github.com/Benjib5/Cat-logo-Cards/blob/main/Wallpaper.jpg?raw=true') no-repeat center center fixed;
+        background-size: cover;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Função para gerar e reproduzir áudio
 def play_audio(description, key):
     tts = gTTS(description, lang='pt')
