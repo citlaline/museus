@@ -76,6 +76,7 @@ col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.image("https://assets.masp.org.br/uploads/temp/WEB_AL_MASP_00267_01.jpg", width=150)
+    st.caption('Moema')
     if st.button('Clique aqui', key='button1'):
         description = descriptions['button1']
         st.write(description)
