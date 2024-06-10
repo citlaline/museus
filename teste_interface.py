@@ -31,18 +31,18 @@ def convert_to_base64(image_bytes):
 def describe_image(image_data):
     st.write("Descrevendo imagem...")  # Mensagem de log
     
-    if isinstance(image_data, bytes):  # Se for uma imagem carregada
-        image_base64 = convert_to_base64(image_data)
-        response = client.chat(
-            model='llava',
-            messages=[
-                {'role': 'user', 'content': 'Describe the following work of art:', 'images': [image_base64]},
-            ],
-        )
-        return translator.translate(response['message']['content'])
-    
-    elif isinstance(image_data, str):  # Se for um link para uma imagem
-        try:
+    try:
+        if isinstance(image_data, bytes):  # Se for uma imagem carregada
+            image_base64 = convert_to_base64(image_data)
+            response = client.chat(
+                model='llava',
+                messages=[
+                    {'role': 'user', 'content': 'Describe the following work of art:', 'images': [image_base64]},
+                ],
+            )
+            return translator.translate(response['message']['content'])
+        
+        elif isinstance(image_data, str):  # Se for um link para uma imagem
             response = requests.get(image_data)
             image = Image.open(BytesIO(response.content))
             image_bytes = response.content
@@ -53,9 +53,8 @@ def describe_image(image_data):
                 ],
             )
             return translator.translate(response['message']['content'])
-        
-        except Exception as e:
-            st.error(f"Não foi possível carregar a imagem do link. Verifique o URL. Erro: {e}")
+    except Exception as e:
+        st.error(f"Ocorreu um erro ao descrever a imagem: {e}")
 
 # Descrições das imagens pré-definidas
 descriptions = {
@@ -78,20 +77,16 @@ if image_source == 'Upload':
         st.image(image, caption='Imagem carregada.', use_column_width=True)
         image_bytes = uploaded_file.read()  # Lê o conteúdo do arquivo carregado
         description = describe_image(image_bytes)  # Passa o conteúdo do arquivo para a função
-        st.write(description)
-        play_audio(description, 'uploaded_image')
+        if description:
+            st.write(description)
+            play_audio(description, 'uploaded_image')
 elif image_source == 'Link':
     image_url = st.text_input("Coloque o link da imagem")
     if image_url:
-        try:
-            response = requests.get(image_url)
-            image = Image.open(BytesIO(response.content))
-            st.image(image, caption='Imagem do link.', use_column_width=True)
-            description = describe_image(response.content)  # Passa o conteúdo da resposta para a função
+        description = describe_image(image_url)  # Passa o link da imagem para a função
+        if description:
             st.write(description)
             play_audio(description, 'linked_image')
-        except Exception as e:
-            st.error(f"Não foi possível carregar a imagem do link. Verifique o URL. Erro: {e}")
 
 col1, col2, col3, col4 = st.columns(4)
 
