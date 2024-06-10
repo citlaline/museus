@@ -28,17 +28,34 @@ def convert_to_base64(image_bytes):
     return base64.b64encode(image_bytes).decode()
 
 # Função para descrever uma imagem
-def describe_image(image_bytes):
+def describe_image(image_data):
     st.write("Descrevendo imagem...")  # Mensagem de log
-    image_base64 = convert_to_base64(image_bytes)
     
-    response = client.chat(
-        model='llava',
-        messages=[
-            {'role': 'user', 'content': 'Describe the following work of art:', 'images': [image_base64]},
-        ],
-    )
-    return translator.translate(response['message']['content'])
+    if isinstance(image_data, bytes):  # Se for uma imagem carregada
+        image_base64 = convert_to_base64(image_data)
+        response = client.chat(
+            model='llava',
+            messages=[
+                {'role': 'user', 'content': 'Describe the following work of art:', 'images': [image_base64]},
+            ],
+        )
+        return translator.translate(response['message']['content'])
+    
+    elif isinstance(image_data, str):  # Se for um link para uma imagem
+        try:
+            response = requests.get(image_data)
+            image = Image.open(BytesIO(response.content))
+            image_bytes = response.content
+            response = client.chat(
+                model='llava',
+                messages=[
+                    {'role': 'user', 'content': 'Describe the following work of art:', 'images': [convert_to_base64(image_bytes)]},
+                ],
+            )
+            return translator.translate(response['message']['content'])
+        
+        except Exception as e:
+            st.error(f"Não foi possível carregar a imagem do link. Verifique o URL. Erro: {e}")
 
 # Descrições das imagens pré-definidas
 descriptions = {
