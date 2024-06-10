@@ -107,9 +107,3 @@ with st.sidebar:
     st.write('Sejam bem-vind@s ao HEART!')
     info = st.write('Neste aplicativo, pinturas e imagens transpassam as barreiras do visual. Com o objetivo de garantir acessibilidade, aqui, a arte pode ser ouvida e, assim, com essa maior proximidade com o público, pode ser sentida com o coração (HEAR + ART = HEART). Usa-se, desse modo, a Inteligência Artificial para garantir o direito à arte e cultura, por uma arte mais acessível e quebradora de barreiras sensoriais.')
     st.caption('Criado por Alinne Rohs, Luiza Torrão Britto, Pedro Bezerra')
-    def play_audio(description, key):
-        tts = gTTS(info, lang='pt')
-        audio_file = f"audio_{key}.mp3"
-        tts.save(audio_file)
-        audio_bytes = open(audio_file, 'rb').read()
-        st.audio(audio_bytes, format='audio/mp3')
