@@ -76,7 +76,7 @@ col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.image("https://assets.masp.org.br/uploads/temp/WEB_AL_MASP_00267_01.jpg", width=150)
-    st.caption('Moema')
+    st.caption('Moema, 1866 (Victor Meirelles)')
     if st.button('Clique aqui', key='button1'):
         description = descriptions['button1']
         st.write(description)
@@ -84,6 +84,7 @@ with col1:
 
 with col2:
     st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_C_01193_01.jpg", width=150)
+    st.caption('Interior, 1925 (Anita Malfatti)')
     if st.button('Clique aqui', key='button2'):
         description = descriptions['button2']
         st.write(description)
@@ -91,6 +92,7 @@ with col2:
 
 with col3:
     st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10811_01.jpg", width=150)
+    st.caption('Okê Oxóssi, 1970 (Abdias Nascimento)')
     if st.button('Clique aqui', key='button3'):
         description = descriptions['button3']
         st.write(description)
@@ -98,6 +100,7 @@ with col3:
 
 with col4:
     st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10808_01.jpg", width=150)
+    st.caption('Zeferina, 2018 (Dalton Paula)')
     if st.button('Clique aqui', key='button4'):
         description = descriptions['button4']
         st.write(description)
