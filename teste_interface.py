@@ -6,19 +6,15 @@ from io import BytesIO
 import base64
 from deep_translator import GoogleTranslator
 from ollama import Client
-import os
 
 # Configurar o cliente Ollama
 client = Client(host='https://ef12-2804-14d-5c5c-9ce1-00-1006.ngrok-free.app')
 translator = GoogleTranslator(source='en', target='pt')
 
-# Diretório para salvar os arquivos de áudio
-audio_dir = 'audio_files'
-
 # Função para gerar e reproduzir áudio
 def play_audio(description, key):
     tts = gTTS(description, lang='pt')
-    audio_file = os.path.join(audio_dir, f"audio_{key}.mp3")  # Caminho absoluto para o arquivo de áudio
+    audio_file = f"audio_{key}.mp3"
     tts.save(audio_file)
     audio_bytes = open(audio_file, 'rb').read()
     st.audio(audio_bytes, format='audio/mp3')
@@ -28,33 +24,17 @@ def convert_to_base64(image_bytes):
     return base64.b64encode(image_bytes).decode()
 
 # Função para descrever uma imagem
-def describe_image(image_data):
+def describe_image(image_bytes):
     st.write("Descrevendo imagem...")  # Mensagem de log
+    image_base64 = convert_to_base64(image_bytes)
     
-    try:
-        if isinstance(image_data, bytes):  # Se for uma imagem carregada
-            image_base64 = convert_to_base64(image_data)
-            response = client.chat(
-                model='llava',
-                messages=[
-                    {'role': 'user', 'content': 'Describe the following work of art:', 'images': [image_base64]},
-                ],
-            )
-            return translator.translate(response['message']['content'])
-        
-        elif isinstance(image_data, str):  # Se for um link para uma imagem
-            response = requests.get(image_data)
-            image = Image.open(BytesIO(response.content))
-            image_bytes = response.content
-            response = client.chat(
-                model='llava',
-                messages=[
-                    {'role': 'user', 'content': 'Describe the following work of art:', 'images': [convert_to_base64(image_bytes)]},
-                ],
-            )
-            return translator.translate(response['message']['content'])
-    except Exception as e:
-        st.error(f"Ocorreu um erro ao descrever a imagem: {e}")
+    response = client.chat(
+        model='llava',
+        messages=[
+            {'role': 'user', 'content': 'Describe the following work of art:', 'images': [image_base64]},
+        ],
+    )
+    return translator.translate(response['message']['content'])
 
 # Descrições das imagens pré-definidas
 descriptions = {
@@ -77,16 +57,20 @@ if image_source == 'Upload':
         st.image(image, caption='Imagem carregada.', use_column_width=True)
         image_bytes = uploaded_file.read()  # Lê o conteúdo do arquivo carregado
         description = describe_image(image_bytes)  # Passa o conteúdo do arquivo para a função
-        if description:
-            st.write(description)
-            play_audio(description, 'uploaded_image')
+        st.write(description)
+        play_audio(description, 'uploaded_image')
 elif image_source == 'Link':
     image_url = st.text_input("Coloque o link da imagem")
     if image_url:
-        description = describe_image(image_url)  # Passa o link da imagem para a função
-        if description:
+        try:
+            response = requests.get(image_url)
+            image = Image.open(BytesIO(response.content))
+            st.image(image, caption='Imagem do link.', use_column_width=True)
+            description = describe_image(response.content)  # Passa o conteúdo da resposta para a função
             st.write(description)
             play_audio(description, 'linked_image')
+        except Exception as e:
+            st.error(f"Não foi possível carregar a imagem do link. Verifique o URL. Erro: {e}")
 
 col1, col2, col3, col4 = st.columns(4)
 
