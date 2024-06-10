@@ -6,7 +6,6 @@ from io import BytesIO
 import base64
 from deep_translator import GoogleTranslator
 from ollama import Client
-import os
 
 # Configurar o cliente Ollama
 client = Client(host='https://ef12-2804-14d-5c5c-9ce1-00-1006.ngrok-free.app')
