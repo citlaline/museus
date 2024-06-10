@@ -15,7 +15,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background: url('https://github.com/Benjib5/Cat-logo-Cards/blob/main/Wallpaper.jpg?raw=true') no-repeat center center fixed;
+        background: url('https://github.com/Benjib5/museus/blob/main/image.png') no-repeat center center fixed;
         background-size: cover;
     }
     </style>
