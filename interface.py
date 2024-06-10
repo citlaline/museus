@@ -75,28 +75,28 @@ elif image_source == 'Link':
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.image("https://assets.masp.org.br/uploads/temp/WEB_AL_MASP_00267_01.jpg", width=250)
+    st.image("https://assets.masp.org.br/uploads/temp/WEB_AL_MASP_00267_01.jpg", width=200)
     if st.button('Clique aqui', key='button1'):
         description = descriptions['button1']
         st.write(description)
         play_audio(description, 'button1')
 
 with col2:
-    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_C_01193_01.jpg", width=250)
+    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_C_01193_01.jpg", width=200)
     if st.button('Clique aqui', key='button2'):
         description = descriptions['button2']
         st.write(description)
         play_audio(description, 'button2')
 
 with col3:
-    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10811_01.jpg", width=250)
+    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10811_01.jpg", width=200)
     if st.button('Clique aqui', key='button3'):
         description = descriptions['button3']
         st.write(description)
         play_audio(description, 'button3')
 
 with col4:
-    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10808_01.jpg", width=250)
+    st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10808_01.jpg", width=200)
     if st.button('Clique aqui', key='button4'):
         description = descriptions['button4']
         st.write(description)
