@@ -6,15 +6,19 @@ from io import BytesIO
 import base64
 from deep_translator import GoogleTranslator
 from ollama import Client
+import os
 
 # Configurar o cliente Ollama
 client = Client(host='https://ef12-2804-14d-5c5c-9ce1-00-1006.ngrok-free.app')
 translator = GoogleTranslator(source='en', target='pt')
 
+# Diretório para salvar os arquivos de áudio
+audio_dir = 'audio_files'
+
 # Função para gerar e reproduzir áudio
 def play_audio(description, key):
     tts = gTTS(description, lang='pt')
-    audio_file = f"audio_{key}.mp3"
+    audio_file = os.path.join(audio_dir, f"audio_{key}.mp3")  # Caminho absoluto para o arquivo de áudio
     tts.save(audio_file)
     audio_bytes = open(audio_file, 'rb').read()
     st.audio(audio_bytes, format='audio/mp3')
