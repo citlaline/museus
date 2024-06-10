@@ -6,7 +6,6 @@ from io import BytesIO
 import base64
 from deep_translator import GoogleTranslator
 from ollama import Client
-import os
 
 # Configurar o cliente Ollama
 client = Client(host='https://ef12-2804-14d-5c5c-9ce1-00-1006.ngrok-free.app')
@@ -26,13 +25,17 @@ def convert_to_base64(image_bytes):
 
 # Função para descrever uma imagem
 def describe_image(image_path_or_file):
+    st.write("Descrevendo imagem...")  # Mensagem de log
     if isinstance(image_path_or_file, str) and image_path_or_file.startswith('http'):
+        st.write("Imagem é um URL.")  # Mensagem de log
         content = requests.get(image_path_or_file).content
         image_base64 = base64.b64encode(content).decode()
     elif isinstance(image_path_or_file, str):
+        st.write("Imagem é um caminho de arquivo.")  # Mensagem de log
         with open(image_path_or_file, 'rb') as f:
             image_base64 = base64.b64encode(f.read()).decode()
     else:
+        st.write("Imagem é um arquivo carregado.")  # Mensagem de log
         image_bytes = image_path_or_file.read()
         image_base64 = convert_to_base64(image_bytes)
     
@@ -77,7 +80,7 @@ elif image_source == 'Link':
             st.write(description)
             play_audio(description, 'linked_image')
         except Exception as e:
-            st.error("Não foi possível carregar a imagem do link. Verifique o URL.")
+            st.error(f"Não foi possível carregar a imagem do link. Verifique o URL. Erro: {e}")
 
 col1, col2, col3, col4 = st.columns(4)
 
