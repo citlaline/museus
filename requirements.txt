@@ -10,3 +10,4 @@ accelerate
 transformers
 gtts
 ollama
+client.chat
