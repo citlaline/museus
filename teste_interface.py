@@ -6,6 +6,7 @@ from io import BytesIO
 import base64
 from deep_translator import GoogleTranslator
 from ollama import Client
+import os
 
 # Configurar o cliente Ollama
 client = Client(host='https://ef12-2804-14d-5c5c-9ce1-00-1006.ngrok-free.app')
@@ -20,10 +21,8 @@ def play_audio(description, key):
     st.audio(audio_bytes, format='audio/mp3')
 
 # Função para converter imagem em base64
-def convert_to_base64(imagem):
-    buffered = BytesIO()
-    buffered.write(imagem.read())
-    return base64.b64encode(buffered.getvalue()).decode()
+def convert_to_base64(image_bytes):
+    return base64.b64encode(image_bytes).decode()
 
 # Função para descrever uma imagem
 def describe_image(image_path_or_file):
@@ -34,7 +33,8 @@ def describe_image(image_path_or_file):
         with open(image_path_or_file, 'rb') as f:
             image_base64 = base64.b64encode(f.read()).decode()
     else:
-        image_base64 = convert_to_base64(image_path_or_file)
+        image_bytes = image_path_or_file.read()
+        image_base64 = convert_to_base64(image_bytes)
     
     response = client.chat(
         model='llava',
