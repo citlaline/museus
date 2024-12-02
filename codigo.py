@@ -48,9 +48,6 @@ descriptions = {
     'button4': 'Descrição da obra Zeferina, 2018 (Dalton Paula).',
 }
 
-def play_audio(description, button_key):
-    st.audio(f"audio/{button_key}.mp3")
-
 with col1:
     st.image("https://assets.masp.org.br/uploads/temp/WEB_AL_MASP_00267_01.jpg", width=150)
     st.caption('Moema, 1866 (Victor Meirelles)')
