@@ -1,7 +1,7 @@
 from groq import Groq
 import streamlit as st
 
-api_key = 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
+api_key = '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'
 
 client = Groq(api_key=api_key)
 
