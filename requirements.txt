@@ -11,3 +11,4 @@ transformers
 gtts
 ollama
 client.chat
+groq
