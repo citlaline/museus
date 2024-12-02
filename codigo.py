@@ -57,7 +57,6 @@ with col1:
     if st.button('Clique aqui', key='button1'):
         description = descriptions['button1']
         st.write(description)
-        play_audio(description, 'button1')
 
 with col2:
     st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_C_01193_01.jpg", width=150)
@@ -65,7 +64,6 @@ with col2:
     if st.button('Clique aqui', key='button2'):
         description = descriptions['button2']
         st.write(description)
-        play_audio(description, 'button2')
 
 with col3:
     st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10811_01.jpg", width=150)
@@ -73,7 +71,6 @@ with col3:
     if st.button('Clique aqui', key='button3'):
         description = descriptions['button3']
         st.write(description)
-        play_audio(description, 'button3')
 
 with col4:
     st.image("https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10808_01.jpg", width=150)
@@ -81,7 +78,6 @@ with col4:
     if st.button('Clique aqui', key='button4'):
         description = descriptions['button4']
         st.write(description)
-        play_audio(description, 'button4')
 
 with st.sidebar:
     st.header('HEART')
